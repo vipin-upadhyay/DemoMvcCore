@@ -1,0 +1,62 @@
+﻿@model LoginVM
+@{
+    var LoginMessage = TempData["Error"];
+}
+@if (TempData["Error"] != null)
+{
+    <div class="row text-danger">
+        <h1>
+            @LoginMessage
+        </h1>
+    </div>
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+@if (TempData["Success"] != null)
+{
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success("@TempData["Success"] ");
+    </script>
+}
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Local account login</h1>
+            <hr />
+           @* <input hidden asp-for="Email" />
+            <input hidden asp-for="Password" />
+*@
+            @* <div class="border p-3 mt-4">*@
+            <div class="row pb-4">
+                Email:
+                <input type="text" name="Email" class="form-control" />
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+            <div class="row pb-4">
+                Password:
+                <input type="password" name="Password" class="form-control" />
+                <span asp-validation-for="@Model.Password" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <button type="submit" class=" btn btn-primary" asp-page="">Login</button>
+            </div>
+
+            @* </div>*@
+        </div>
+        <div class="col-md-6">
+            <h1>External login</h1>
+            <a asp-controller="Account" asp-action="ExternalLogin" class="text-danger mx-2">
+                <i class="bi bi-google"></i>
+            </a>
+            <a asp-page="/Login/FacebookLogin" asp-route-returlurl="@Model" class="text-danger mx-2">
+                <i class="bi bi-facebook"></i>
+            </a>
+            @* <button type="submit" class=" btn btn-primary text-danger" asp-page-handler="/Login/OnPostGoogleLogin">Google</button>*@
+        </div>
+    </div>
+
+
+</form>
